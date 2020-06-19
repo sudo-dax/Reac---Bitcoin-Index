@@ -12,17 +12,16 @@ const App = (props) => {
   const defaultCurrency = "AUD"
   const [currency, setCurrency] = useState(defaultCurrency)
   const [bitcoinData, setBitcoinData] = useState({})
+  const bitcoinApi = "https://api.coindesk.com/v1/bpi/historical/close.json"
 
   useEffect(() => {
     console.log("in useEffect")
-    // componentDidMount
-    // Fetch from Bitcoin Coindesk API
     function getData() {
       fetch(`${bitcoinApi}?currency=${currency}`)
-      .then((response) => response.json)
+      .then((response) => response.json())
       .then((data) => setBitcoinData(data.bpi))
+      .catch((error) => console.error(error))
     }
-    // componentDidUpdate
     getData()
     // Override componentWillUnmount with the returned callback function
     return () => {console.log("This executes on componentWillUnmount")}
