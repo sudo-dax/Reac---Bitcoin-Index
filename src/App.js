@@ -16,8 +16,14 @@ const App = (props) => {
   useEffect(() => {
     console.log("in useEffect")
     // componentDidMount
-    const data = {"2020-01-10":11866.0075,"2020-01-11":11619.6983,"2020-01-12":11858.2603}
-    setBitcoinData(data)
+    // Fetch from Bitcoin Coindesk API
+    function getData() {
+      fetch(`${bitcoinApi}?currency=${currency}`)
+      .then((response) => response.json)
+      .then((data) => setBitcoinData(data.bpi))
+    }
+    // componentDidUpdate
+    getData()
     // Override componentWillUnmount with the returned callback function
     return () => {console.log("This executes on componentWillUnmount")}
   }, [currency])
